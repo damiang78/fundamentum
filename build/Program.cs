@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
+using Cake.Common;
+using Cake.Common.Tools.DotNet;
 using Cake.Core;
-using Cake.Core.Diagnostics;
 using Cake.Frosting;
 
 public static class Program
@@ -15,43 +15,22 @@ public static class Program
 
 public class BuildContext : FrostingContext
 {
-    public bool Delay { get; set; }
+    private const string ConfigurationStr = "configuration";
+    private const string DefaultConfiguration = "Release";
+    public string MsBuildConfiguration { get; set; }
+    public DotNetVerbosity Verbosity { get; set; }
 
     public BuildContext(ICakeContext context)
         : base(context)
     {
-        Delay = context.Arguments.HasArgument("delay");
-    }
-}
-
-[TaskName("Hello")]
-public sealed class HelloTask : FrostingTask<BuildContext>
-{
-    public override void Run(BuildContext context)
-    {
-        context.Log.Information("Hello");
-    }
-}
-
-[TaskName("World")]
-[IsDependentOn(typeof(HelloTask))]
-public sealed class WorldTask : AsyncFrostingTask<BuildContext>
-{
-    // Tasks can be asynchronous
-    public override async Task RunAsync(BuildContext context)
-    {
-        if (context.Delay)
-        {
-            context.Log.Information("Waiting...");
-            await Task.Delay(1500);
-        }
-
-        context.Log.Information("World");
+        MsBuildConfiguration = context.Argument(ConfigurationStr, DefaultConfiguration);
+        Verbosity = context.Argument("verbosity", DotNetVerbosity.Minimal);
     }
 }
 
 [TaskName("Default")]
-[IsDependentOn(typeof(WorldTask))]
+[IsDependentOn(typeof(CleanTask))]
+[IsDependentOn(typeof(BuildTask))]
 public class DefaultTask : FrostingTask
 {
 }
