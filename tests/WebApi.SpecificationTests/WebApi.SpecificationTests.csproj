@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ductus.FluentDocker" Version="2.10.45" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
 	<PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.*" />
     <PackageReference Include="SpecRun.SpecFlow" Version="3.9.*" />
