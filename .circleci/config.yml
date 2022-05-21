@@ -9,7 +9,8 @@ jobs:
       - run:
           name: CI
           command: |
-            dotnet build
+            chmod +x build.sh
+            build.sh
             
 workflows:
   version: 2
