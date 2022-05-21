@@ -9,9 +9,7 @@ jobs:
       - run:
           name: CI
           command: |
-            dotnet --list-sdks
-            ls
-            build.sh
+            dotnet build
             
 workflows:
   version: 2
