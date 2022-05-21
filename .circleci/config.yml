@@ -10,6 +10,7 @@ jobs:
           name: CI
           command: |
             dotnet --list-sdks
+            ls
             
 workflows:
   version: 2
